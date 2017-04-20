@@ -1,10 +1,10 @@
-// READ readme.txt 
+// READ readme.txt
 
 #include<iostream>
 #include<fstream>
 #include<stdlib.h>
 #include<chrono>
-#include <ctime>
+#include<ctime>
 #include<stdio.h>
 #include<cstring>
 
@@ -19,11 +19,11 @@ void insert_into_file();
 
 struct
 {
-  char phone_no[10];
+  char phone_no[20];
   char name[30];
-  char email[30];
+  char email[50];
   char *create_time;
-  char create_time1[20];
+  char create_time1[30];
 }contact;
 
 fstream phonebook;
@@ -187,7 +187,7 @@ void delete_contact()
   }
   else
   {
-    cout<<"\n\tDo you want this CONTACT to be DELETED ?";
+    cout<<"\n\n\tDo you want this CONTACT to be DELETED ?";
     cin>>ch;
     if(ch=='y'||ch=='Y')
     {
@@ -206,6 +206,8 @@ void delete_contact()
       system(cmd);
       system("mv phonebook1.txt phonebook.txt");
       cout<<"\n\tDELETED!";
+      cout<<"\n\n\tEnter any key for Main Menu ";
+      cin>>ch;
     }
   }
 }
