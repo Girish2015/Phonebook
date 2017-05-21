@@ -7,6 +7,7 @@
 #include<ctime>
 #include<stdio.h>
 #include<cstring>
+#include<unistd.h>
 
 using namespace std;
 
@@ -27,7 +28,7 @@ struct
 }contact;
 
 fstream phonebook;
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 int main()
 {
   phonebook.open("phonebook.txt",ios::app);
@@ -35,7 +36,7 @@ int main()
   int ch;
   while(1)
   {
-    system("clear");
+    system("tput reset");
     cout<<"\n\tPHONE BOOK APP";
     cout<<"\n\n\t1.CREATE NEW CONTACT";
     cout<<"\n\t2.VIEW CONTACT";
@@ -51,14 +52,14 @@ int main()
       case 2:view();
       break;
       case 3:search();
-      break;
+      break;https://github.com/Girish2015/Phonebook
       case 4:delete_contact();
       break;
       default:return 0;
     }
   }
 }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void initialize_time()
 {
   std::chrono::time_point<std::chrono::system_clock> t;
@@ -77,12 +78,15 @@ void insert_into_file()
   sprintf(buf,"%s|%s|%s|%s|",contact.phone_no,contact.name,contact.email,contact.create_time);
   strcat(buf,"\n");
   phonebook.write(buf,strlen(buf));
+  cout<<"\n\tThe contact has been created";
+  cout<<"\n\n\tPress any key for menu";
+  flush(cout);
+  system("bash pause.sh");
   phonebook.close();
 }
-
 void create()
 {
-  system("clear");
+  system("tput reset");
   cout<<"\n\tEnter the contact name: ";
   cin>>contact.name;
   cout<<"\n\tEnter the contact number: ";
@@ -92,10 +96,10 @@ void create()
   initialize_time();
   insert_into_file();
 }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void view()
 {
-  system("clear");
+  system("tput reset");
   phonebook.open("phonebook.txt",ios::in);
   if(phonebook.fail())
     cout<<"File open FAIL!";
@@ -113,15 +117,15 @@ void view()
     cout<<"\n\tDATE/TIME ADDED : "<<contact.create_time1;
     cout<<"\n";
   }
-  cout<<"\nPress any key for Main Menu";
-  char ch;
-  cin>>ch;
+  cout<<"\n\tPress any key for Main Menu";
+  flush(cout);
+  system("bash pause.sh");
   phonebook.close();
 }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void search()
 {
-  system("clear");
+  system("tput reset");
   phonebook.open("phonebook.txt",ios::in);
   if(phonebook.fail())
     cout<<"File open FAIL!";
@@ -141,7 +145,8 @@ void search()
       cout<<"\n\tDATE/TIME ADDED : "<<contact.create_time1;
       flag=1;
       cout<<"\n\n\tEnter any key for Main Menu ";
-      cin>>ch;
+      flush(cout);
+      system("bash pause.sh;");
       break;
     }
   }
@@ -149,19 +154,20 @@ void search()
     {
       cout<<"\n\tContact not FOUND!";
       cout<<"\n\n\tEnter any key for Main Menu ";
-      cin>>ch;
+      flush(cout);
+      system("bash pause.sh;");
     }
     phonebook.close();
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void delete_contact()
 {
-  system("clear");
+  system("tput reset");
   phonebook.open("phonebook.txt",ios::in|ios::out);
   if(phonebook.fail())
     cout<<"File open FAIL!";
   char key[20],buf[500],ch;
-  int flag;
+  int flag =0;
   cout<<"\n\tDELETE CONTACT";
   cout<<"\n\n\tEnter the Name or Phone Number: ";
   cin>>key;
@@ -183,7 +189,9 @@ void delete_contact()
   {
     cout<<"\n\tContact not FOUND!";
     cout<<"\n\n\tEnter any key for Main Menu ";
-    cin>>ch;
+    flush(cout);
+    system("bash pause.sh;");
+    return;
   }
   else
   {
@@ -192,22 +200,13 @@ void delete_contact()
     if(ch=='y'||ch=='Y')
     {
       char cmd[100];
-      /*char cmd[50]="awk -F "|" '!($1 == ";
-      strcat(cmd,key);
-      strcat(cmd,""||$2=="");
-      strcat(cmd,key);
-      strcat(cmd,"\")' phonebook.txt");
-      cout<<cmd;
-      awk -F "|" '!($1 == "key"||$2=="key")' phonebook.txt
-      system(cmd);
-      cout<<"\n"
-      */
       sprintf(cmd,"awk -F \"|\" '!($1 == \"%s\"||$2==\"%s\")' phonebook.txt>phonebook1.txt",key,key);
       system(cmd);
       system("mv phonebook1.txt phonebook.txt");
       cout<<"\n\tDELETED!";
       cout<<"\n\n\tEnter any key for Main Menu ";
-      cin>>ch;
+      flush(cout);
+      system("bash pause.sh;");
     }
   }
 }
